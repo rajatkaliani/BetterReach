@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Student Life Manager Design System - Clean blue/white/gray palette */
+/* All colors MUST be HSL */
+
+@layer base {
+  :root {
+    /* Core Background Colors */
+    --background: 210 30% 98%;
+    --foreground: 215 25% 27%;
+    
+    /* Card System */
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 27%;
+    
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 27%;
+    
+    /* Primary - Clean Blue */
+    --primary: 210 90% 52%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 210 90% 95%;
+    --primary-dark: 210 90% 42%;
+    
+    /* Secondary - Soft Gray */
+    --secondary: 210 15% 96%;
+    --secondary-foreground: 215 25% 27%;
+    
+    /* Muted - Light Gray */
+    --muted: 210 15% 95%;
+    --muted-foreground: 215 15% 55%;
+    
+    /* Accent - Light Blue */
+    --accent: 210 90% 95%;
+    --accent-foreground: 210 90% 52%;
+    
+    /* Status Colors */
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+    --success-light: 142 70% 95%;
+    
+    --warning: 45 90% 55%;
+    --warning-foreground: 0 0% 100%;
+    --warning-light: 45 90% 95%;
+    
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-light: 0 75% 95%;
+    
+    /* Border and Input */
+    --border: 210 20% 88%;
+    --input: 210 20% 88%;
+    --ring: 210 90% 52%;
+    
+    /* Radius */
+    --radius: 0.75rem;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 215 25% 27%;
+    --sidebar-primary: 210 90% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 90% 95%;
+    --sidebar-accent-foreground: 210 90% 52%;
+    --sidebar-border: 210 20% 88%;
+    --sidebar-ring: 210 90% 52%;
+    
+    /* Custom Gradient Backgrounds */
+    --gradient-page: linear-gradient(135deg, hsl(210 30% 98%), hsl(210 20% 96%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 15% 99%));
+    
+    /* Shadow System */
+    --shadow-sm: 0 1px 2px 0 hsl(210 15% 0% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(210 15% 0% / 0.1), 0 2px 4px -1px hsl(210 15% 0% / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(210 15% 0% / 0.1), 0 4px 6px -2px hsl(210 15% 0% / 0.05);
+    --shadow-xl: 0 20px 25px -5px hsl(210 15% 0% / 0.1), 0 10px 10px -5px hsl(210 15% 0% / 0.04);
+    
+    /* Animation */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 215 30% 8%;
+    --foreground: 210 30% 92%;
+    
+    --card: 215 30% 10%;
+    --card-foreground: 210 30% 92%;
+    
+    --popover: 215 30% 10%;
+    --popover-foreground: 210 30% 92%;
+    
+    --primary: 210 90% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 210 90% 20%;
+    --primary-dark: 210 90% 45%;
+    
+    --secondary: 215 20% 15%;
+    --secondary-foreground: 210 30% 92%;
+    
+    --muted: 215 20% 12%;
+    --muted-foreground: 215 15% 65%;
+    
+    --accent: 210 90% 20%;
+    --accent-foreground: 210 90% 55%;
+    
+    --success: 142 70% 50%;
+    --success-foreground: 0 0% 100%;
+    --success-light: 142 70% 15%;
+    
+    --warning: 45 90% 60%;
+    --warning-foreground: 0 0% 100%;
+    --warning-light: 45 90% 15%;
+    
+    --destructive: 0 75% 65%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-light: 0 75% 15%;
+    
+    --border: 215 20% 18%;
+    --input: 215 20% 18%;
+    --ring: 210 90% 55%;
+    
+    --sidebar-background: 215 30% 9%;
+    --sidebar-foreground: 210 30% 85%;
+    --sidebar-primary: 210 90% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 90% 15%;
+    --sidebar-accent-foreground: 210 90% 55%;
+    --sidebar-border: 215 20% 15%;
+    --sidebar-ring: 210 90% 55%;
+    
+    --gradient-page: linear-gradient(135deg, hsl(215 30% 8%), hsl(215 25% 10%));
+    --gradient-card: linear-gradient(145deg, hsl(215 30% 10%), hsl(215 25% 12%));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background: hsl(var(--background));
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Page container with gradient background */
+  .page-container {
+    @apply min-h-screen;
+    background: var(--gradient-page);
+  }
+  
+  /* Card with enhanced styling */
+  .card-enhanced {
+    @apply bg-card rounded-xl border border-border/50 shadow-md;
+    background: var(--gradient-card);
+    transition: var(--transition-smooth);
+  }
+  
+  .card-enhanced:hover {
+    @apply shadow-lg;
+    transform: translateY(-1px);
+  }
+  
+  /* Status badge styles */
+  .badge-success {
+    @apply bg-success/10 text-success border border-success/20 px-2 py-1 rounded-md text-xs font-medium;
+  }
+  
+  .badge-warning {
+    @apply bg-warning/10 text-warning border border-warning/20 px-2 py-1 rounded-md text-xs font-medium;
+  }
+  
+  .badge-error {
+    @apply bg-destructive/10 text-destructive border border-destructive/20 px-2 py-1 rounded-md text-xs font-medium;
+  }
+  
+  /* Chat bubble styles */
+  .chat-bubble-sent {
+    @apply bg-primary text-primary-foreground rounded-t-lg rounded-bl-lg ml-8 px-4 py-2;
+  }
+  
+  .chat-bubble-received {
+    @apply bg-muted text-muted-foreground rounded-t-lg rounded-br-lg mr-8 px-4 py-2;
+  }
+}
