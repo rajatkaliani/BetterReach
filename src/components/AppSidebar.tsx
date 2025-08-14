@@ -1,19 +1,20 @@
-import { useState } from "react"
-import { 
-  LayoutDashboard, 
-  ClipboardCheck, 
-  MessageCircle, 
-  MapPin, 
+import { useState } from "react";
+import {
+  LayoutDashboard,
+  ClipboardCheck,
+  MessageCircle,
+  MapPin,
   Calendar,
   GraduationCap,
   Users,
   Settings,
   BarChart3,
   UserCheck,
-  Heart
-} from "lucide-react"
-import { NavLink, useLocation } from "react-router-dom"
-import { useAuth, Role } from "@/context/AuthContext"
+  Heart,
+  Shield,
+} from "lucide-react";
+import { NavLink, useLocation } from "react-router-dom";
+import { useAuth, Role } from "@/context/AuthContext";
 
 import {
   Sidebar,
@@ -25,73 +26,82 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 const getRoleNavigation = (role: Role) => {
   const commonItems = [
     { title: "Dashboard", url: "/", icon: LayoutDashboard },
     { title: "Messages", url: "/messages", icon: MessageCircle },
-  ]
+  ];
 
   switch (role) {
-    case 'admin':
+    case "admin":
       return [
         ...commonItems,
-        { title: "User Management", url: "/users", icon: Users },
-        { title: "Locations", url: "/locations", icon: MapPin },
-        { title: "Events", url: "/events", icon: Calendar },
-        { title: "Analytics", url: "/analytics", icon: BarChart3 },
-        { title: "Settings", url: "/settings", icon: Settings },
-      ]
-    case 'instructor':
+        {
+          title: "User Management",
+          url: "/admin/user-management",
+          icon: Users,
+        },
+        { title: "Locations", url: "/admin/location-setup", icon: MapPin },
+        { title: "Events", url: "/admin/event-management", icon: Calendar },
+        { title: "Analytics", url: "/admin/analytics", icon: BarChart3 },
+        { title: "Security Logs", url: "/admin/security-logs", icon: Shield },
+        { title: "Settings", url: "/admin/system-settings", icon: Settings },
+      ];
+    case "instructor":
       return [
         ...commonItems,
         { title: "Roll Call", url: "/roll-call", icon: ClipboardCheck },
         { title: "Student Locations", url: "/locations", icon: MapPin },
         { title: "Leave Approvals", url: "/leave-approvals", icon: UserCheck },
         { title: "Events", url: "/events", icon: Calendar },
-      ]
-    case 'student':
+      ];
+    case "student":
       return [
         ...commonItems,
         { title: "Schedule", url: "/schedule", icon: Calendar },
         { title: "Check In/Out", url: "/checkin", icon: MapPin },
-        { title: "Leave Requests", url: "/leave-requests", icon: ClipboardCheck },
+        {
+          title: "Leave Requests",
+          url: "/leave-requests",
+          icon: ClipboardCheck,
+        },
         { title: "Wellness", url: "/wellness", icon: Heart },
-      ]
-    case 'parent':
+      ];
+    case "parent":
       return [
         ...commonItems,
         { title: "Child Status", url: "/child-status", icon: UserCheck },
         { title: "Approvals", url: "/approvals", icon: ClipboardCheck },
         { title: "Events", url: "/events", icon: Calendar },
         { title: "Reports", url: "/reports", icon: BarChart3 },
-      ]
+      ];
     default:
-      return commonItems
+      return commonItems;
   }
-}
+};
 
 export function AppSidebar() {
-  const { state } = useSidebar()
-  const location = useLocation()
-  const currentPath = location.pathname
-  const { user } = useAuth()
+  const { state } = useSidebar();
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const { user } = useAuth();
 
-  const navigationItems = getRoleNavigation(user?.role || 'student')
+  const navigationItems = getRoleNavigation(user?.role || "student");
 
   const isActive = (path: string) => {
-    if (path === "/" && currentPath === "/") return true
-    if (path !== "/" && currentPath.startsWith(path)) return true
-    return false
-  }
+    if (path === "/" && currentPath === "/") return true;
+    if (path !== "/" && currentPath.startsWith(path)) return true;
+    return false;
+  };
 
   const getNavClassName = (path: string) => {
-    const baseClasses = "w-full justify-start transition-all duration-200"
-    return isActive(path) 
-      ? `${baseClasses} bg-sidebar-accent text-sidebar-accent-foreground font-medium` 
-      : `${baseClasses} hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground`
-  }
+    const baseClasses = "w-full justify-start transition-all duration-200";
+    return isActive(path)
+      ? `${baseClasses} bg-sidebar-accent text-sidebar-accent-foreground font-medium`
+      : `${baseClasses} hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground`;
+  };
 
   return (
     <Sidebar className="border-r border-sidebar-border">
@@ -104,7 +114,9 @@ export function AppSidebar() {
             </div>
             {state !== "collapsed" && (
               <div>
-                <h2 className="text-lg font-bold text-sidebar-foreground">Student Life</h2>
+                <h2 className="text-lg font-bold text-sidebar-foreground">
+                  Student Life
+                </h2>
                 <p className="text-xs text-sidebar-foreground/60">Manager</p>
               </div>
             )}
@@ -119,8 +131,8 @@ export function AppSidebar() {
               {navigationItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <NavLink 
-                      to={item.url} 
+                    <NavLink
+                      to={item.url}
                       className={getNavClassName(item.url)}
                     >
                       <item.icon className="h-5 w-5" />
@@ -134,5 +146,5 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

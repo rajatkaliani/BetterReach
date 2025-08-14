@@ -24,6 +24,20 @@ import Events from "./pages/Events";
 import NotFound from "./pages/NotFound";
 import Unauthorized from "./pages/Unauthorized";
 
+// Admin Pages
+import UserManagement from "./pages/admin/UserManagement";
+import LocationSetup from "./pages/admin/LocationSetup";
+import EventManagement from "./pages/admin/EventManagement";
+import SystemSettings from "./pages/admin/SystemSettings";
+import Analytics from "./pages/admin/Analytics";
+import SecurityLogs from "./pages/admin/SecurityLogs";
+
+// Instructor Pages
+import InstructorRollCall from "./pages/instructor/RollCall";
+import StudentLocations from "./pages/instructor/StudentLocations";
+import InstructorMessages from "./pages/instructor/Messages";
+import LeaveRequests from "./pages/instructor/LeaveRequests";
+
 const queryClient = new QueryClient();
 
 function AppRoutes() {
@@ -31,13 +45,13 @@ function AppRoutes() {
 
   const getDashboardComponent = () => {
     switch (user?.role) {
-      case 'admin':
+      case "admin":
         return <AdminDashboard />;
-      case 'instructor':
+      case "instructor":
         return <InstructorDashboard />;
-      case 'student':
+      case "student":
         return <StudentDashboard />;
-      case 'parent':
+      case "parent":
         return <ParentDashboard />;
       default:
         return <StudentDashboard />;
@@ -47,65 +61,187 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Login Route */}
-      <Route 
-        path="/login" 
-        element={
-          !isAuthenticated ? <Login /> : <Navigate to="/" replace />
-        } 
+      <Route
+        path="/login"
+        element={!isAuthenticated ? <Login /> : <Navigate to="/" replace />}
       />
-      
+
       {/* Dashboard Route - Role-aware */}
-      <Route 
-        path="/" 
+      <Route
+        path="/"
         element={
           isAuthenticated ? (
             <Layout>{getDashboardComponent()}</Layout>
           ) : (
             <Navigate to="/login" replace />
           )
-        } 
+        }
       />
-      
+
       {/* Role-based Protected Routes */}
-      <Route 
-        path="/roll-call" 
+      <Route
+        path="/roll-call"
         element={
-          <RoleRoute allowedRoles={['admin', 'instructor']}>
-            <Layout><RollCall /></Layout>
+          <RoleRoute allowedRoles={["admin", "instructor"]}>
+            <Layout>
+              <RollCall />
+            </Layout>
           </RoleRoute>
-        } 
+        }
       />
-      
-      <Route 
-        path="/messages" 
+
+      <Route
+        path="/messages"
         element={
-          <RoleRoute allowedRoles={['admin', 'instructor', 'student', 'parent']}>
-            <Layout><Messages /></Layout>
+          <RoleRoute
+            allowedRoles={["admin", "instructor", "student", "parent"]}
+          >
+            <Layout>
+              <Messages />
+            </Layout>
           </RoleRoute>
-        } 
+        }
       />
-      
-      <Route 
-        path="/locations" 
+
+      <Route
+        path="/locations"
         element={
-          <RoleRoute allowedRoles={['admin', 'instructor', 'student']}>
-            <Layout><Locations /></Layout>
+          <RoleRoute allowedRoles={["admin", "instructor", "student"]}>
+            <Layout>
+              <Locations />
+            </Layout>
           </RoleRoute>
-        } 
+        }
       />
-      
-      <Route 
-        path="/events" 
+
+      <Route
+        path="/events"
         element={
-          <RoleRoute allowedRoles={['admin', 'instructor', 'student', 'parent']}>
-            <Layout><Events /></Layout>
+          <RoleRoute
+            allowedRoles={["admin", "instructor", "student", "parent"]}
+          >
+            <Layout>
+              <Events />
+            </Layout>
           </RoleRoute>
-        } 
+        }
       />
-      
+
+      {/* Admin Management Routes */}
+      <Route
+        path="/admin/user-management"
+        element={
+          <RoleRoute allowedRoles={["admin"]}>
+            <Layout>
+              <UserManagement />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/admin/location-setup"
+        element={
+          <RoleRoute allowedRoles={["admin"]}>
+            <Layout>
+              <LocationSetup />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/admin/event-management"
+        element={
+          <RoleRoute allowedRoles={["admin"]}>
+            <Layout>
+              <EventManagement />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/admin/system-settings"
+        element={
+          <RoleRoute allowedRoles={["admin"]}>
+            <Layout>
+              <SystemSettings />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/admin/analytics"
+        element={
+          <RoleRoute allowedRoles={["admin"]}>
+            <Layout>
+              <Analytics />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/admin/security-logs"
+        element={
+          <RoleRoute allowedRoles={["admin"]}>
+            <Layout>
+              <SecurityLogs />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      {/* Instructor Routes */}
+      <Route
+        path="/instructor/roll-call"
+        element={
+          <RoleRoute allowedRoles={["instructor"]}>
+            <Layout>
+              <InstructorRollCall />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/instructor/student-locations"
+        element={
+          <RoleRoute allowedRoles={["instructor"]}>
+            <Layout>
+              <StudentLocations />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/instructor/messages"
+        element={
+          <RoleRoute allowedRoles={["instructor"]}>
+            <Layout>
+              <InstructorMessages />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/instructor/leave-requests"
+        element={
+          <RoleRoute allowedRoles={["instructor"]}>
+            <Layout>
+              <LeaveRequests />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
       {/* Unauthorized Route */}
       <Route path="/unauthorized" element={<Unauthorized />} />
-      
+
       {/* 404 Route */}
       <Route path="*" element={<NotFound />} />
     </Routes>
