@@ -5,9 +5,15 @@ import {
   MessageCircle, 
   MapPin, 
   Calendar,
-  GraduationCap
+  GraduationCap,
+  Users,
+  Settings,
+  BarChart3,
+  UserCheck,
+  Heart
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
+import { useAuth, Role } from "@/context/AuthContext"
 
 import {
   Sidebar,
@@ -21,18 +27,58 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-const navigationItems = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard },
-  { title: "Roll Call", url: "/roll-call", icon: ClipboardCheck },
-  { title: "Messages", url: "/messages", icon: MessageCircle },
-  { title: "Locations", url: "/locations", icon: MapPin },
-  { title: "Events", url: "/events", icon: Calendar },
-]
+const getRoleNavigation = (role: Role) => {
+  const commonItems = [
+    { title: "Dashboard", url: "/", icon: LayoutDashboard },
+    { title: "Messages", url: "/messages", icon: MessageCircle },
+  ]
+
+  switch (role) {
+    case 'admin':
+      return [
+        ...commonItems,
+        { title: "User Management", url: "/users", icon: Users },
+        { title: "Locations", url: "/locations", icon: MapPin },
+        { title: "Events", url: "/events", icon: Calendar },
+        { title: "Analytics", url: "/analytics", icon: BarChart3 },
+        { title: "Settings", url: "/settings", icon: Settings },
+      ]
+    case 'instructor':
+      return [
+        ...commonItems,
+        { title: "Roll Call", url: "/roll-call", icon: ClipboardCheck },
+        { title: "Student Locations", url: "/locations", icon: MapPin },
+        { title: "Leave Approvals", url: "/leave-approvals", icon: UserCheck },
+        { title: "Events", url: "/events", icon: Calendar },
+      ]
+    case 'student':
+      return [
+        ...commonItems,
+        { title: "Schedule", url: "/schedule", icon: Calendar },
+        { title: "Check In/Out", url: "/checkin", icon: MapPin },
+        { title: "Leave Requests", url: "/leave-requests", icon: ClipboardCheck },
+        { title: "Wellness", url: "/wellness", icon: Heart },
+      ]
+    case 'parent':
+      return [
+        ...commonItems,
+        { title: "Child Status", url: "/child-status", icon: UserCheck },
+        { title: "Approvals", url: "/approvals", icon: ClipboardCheck },
+        { title: "Events", url: "/events", icon: Calendar },
+        { title: "Reports", url: "/reports", icon: BarChart3 },
+      ]
+    default:
+      return commonItems
+  }
+}
 
 export function AppSidebar() {
   const { state } = useSidebar()
   const location = useLocation()
   const currentPath = location.pathname
+  const { user } = useAuth()
+
+  const navigationItems = getRoleNavigation(user?.role || 'student')
 
   const isActive = (path: string) => {
     if (path === "/" && currentPath === "/") return true
