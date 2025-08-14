@@ -38,6 +38,18 @@ import StudentLocations from "./pages/instructor/StudentLocations";
 import InstructorMessages from "./pages/instructor/Messages";
 import LeaveRequests from "./pages/instructor/LeaveRequests";
 
+// Student Pages
+import StudentSchedule from "./pages/student/Schedule";
+import StudentLeaveRequests from "./pages/student/LeaveRequests";
+import StudentMessages from "./pages/student/Messages";
+import StudentWellness from "./pages/student/Wellness";
+
+// Parent Pages
+import ChildLocations from "./pages/parent/ChildLocations";
+import ParentRequestLeave from "./pages/parent/RequestLeave";
+import ParentMessages from "./pages/parent/Messages";
+import ParentEvents from "./pages/parent/Events";
+
 const queryClient = new QueryClient();
 
 function AppRoutes() {
@@ -234,6 +246,118 @@ function AppRoutes() {
           <RoleRoute allowedRoles={["instructor"]}>
             <Layout>
               <LeaveRequests />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      {/* Student Routes */}
+      <Route
+        path="/student/dashboard"
+        element={
+          <RoleRoute allowedRoles={["student"]}>
+            <Layout>
+              <StudentDashboard />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/student/schedule"
+        element={
+          <RoleRoute allowedRoles={["student"]}>
+            <Layout>
+              <StudentSchedule />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/student/leave-requests"
+        element={
+          <RoleRoute allowedRoles={["student"]}>
+            <Layout>
+              <StudentLeaveRequests />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/student/messages"
+        element={
+          <RoleRoute allowedRoles={["student"]}>
+            <Layout>
+              <StudentMessages />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/student/wellness"
+        element={
+          <RoleRoute allowedRoles={["student"]}>
+            <Layout>
+              <StudentWellness />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      {/* Parent Routes */}
+      <Route
+        path="/parent/dashboard"
+        element={
+          <RoleRoute allowedRoles={["parent"]}>
+            <Layout>
+              <ParentDashboard />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/parent/child-locations"
+        element={
+          <RoleRoute allowedRoles={["parent"]}>
+            <Layout>
+              <ChildLocations />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/parent/request-leave"
+        element={
+          <RoleRoute allowedRoles={["parent"]}>
+            <Layout>
+              <ParentRequestLeave />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/parent/messages"
+        element={
+          <RoleRoute allowedRoles={["parent"]}>
+            <Layout>
+              <ParentMessages />
+            </Layout>
+          </RoleRoute>
+        }
+      />
+
+      <Route
+        path="/parent/events"
+        element={
+          <RoleRoute allowedRoles={["parent"]}>
+            <Layout>
+              <ParentEvents />
             </Layout>
           </RoleRoute>
         }

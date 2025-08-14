@@ -29,15 +29,11 @@ import {
 } from "@/components/ui/sidebar";
 
 const getRoleNavigation = (role: Role) => {
-  const commonItems = [
-    { title: "Dashboard", url: "/", icon: LayoutDashboard },
-    { title: "Messages", url: "/messages", icon: MessageCircle },
-  ];
-
   switch (role) {
     case "admin":
       return [
-        ...commonItems,
+        { title: "Dashboard", url: "/", icon: LayoutDashboard },
+        { title: "Messages", url: "/messages", icon: MessageCircle },
         {
           title: "User Management",
           url: "/admin/user-management",
@@ -51,34 +47,63 @@ const getRoleNavigation = (role: Role) => {
       ];
     case "instructor":
       return [
-        ...commonItems,
-        { title: "Roll Call", url: "/roll-call", icon: ClipboardCheck },
-        { title: "Student Locations", url: "/locations", icon: MapPin },
-        { title: "Leave Approvals", url: "/leave-approvals", icon: UserCheck },
-        { title: "Events", url: "/events", icon: Calendar },
+        { title: "Dashboard", url: "/", icon: LayoutDashboard },
+        { title: "Messages", url: "/instructor/messages", icon: MessageCircle },
+        {
+          title: "Start Roll Call",
+          url: "/instructor/roll-call",
+          icon: ClipboardCheck,
+        },
+        {
+          title: "Student Locations",
+          url: "/instructor/student-locations",
+          icon: MapPin,
+        },
+
+        {
+          title: "Leave Requests",
+          url: "/instructor/leave-requests",
+          icon: UserCheck,
+        },
       ];
     case "student":
       return [
-        ...commonItems,
-        { title: "Schedule", url: "/schedule", icon: Calendar },
-        { title: "Check In/Out", url: "/checkin", icon: MapPin },
+        {
+          title: "Dashboard",
+          url: "/student/dashboard",
+          icon: LayoutDashboard,
+        },
+        { title: "Messages", url: "/student/messages", icon: MessageCircle },
+        { title: "Schedule", url: "/student/schedule", icon: Calendar },
         {
           title: "Leave Requests",
-          url: "/leave-requests",
+          url: "/student/leave-requests",
           icon: ClipboardCheck,
         },
-        { title: "Wellness", url: "/wellness", icon: Heart },
+
+        { title: "Wellness", url: "/student/wellness", icon: Heart },
       ];
     case "parent":
       return [
-        ...commonItems,
-        { title: "Child Status", url: "/child-status", icon: UserCheck },
-        { title: "Approvals", url: "/approvals", icon: ClipboardCheck },
-        { title: "Events", url: "/events", icon: Calendar },
-        { title: "Reports", url: "/reports", icon: BarChart3 },
+        { title: "Dashboard", url: "/parent/dashboard", icon: LayoutDashboard },
+        { title: "Messages", url: "/parent/messages", icon: MessageCircle },
+        {
+          title: "Child Locations",
+          url: "/parent/child-locations",
+          icon: MapPin,
+        },
+        {
+          title: "Request Leave",
+          url: "/parent/request-leave",
+          icon: ClipboardCheck,
+        },
+        { title: "Events", url: "/parent/events", icon: Calendar },
       ];
     default:
-      return commonItems;
+      return [
+        { title: "Dashboard", url: "/", icon: LayoutDashboard },
+        { title: "Messages", url: "/messages", icon: MessageCircle },
+      ];
   }
 };
 
